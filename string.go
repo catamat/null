@@ -9,6 +9,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"strings"
 )
 
 // nullBytes is a JSON null literal
@@ -115,4 +116,13 @@ func (s String) IsZero() bool {
 // Equal returns true if both strings have the same value or are both null.
 func (s String) Equal(other String) bool {
 	return s.Valid == other.Valid && (!s.Valid || s.String == other.String)
+}
+
+// TrimSpace returns a new String, with all leading and trailing white space removed.
+func (s String) TrimSpace() String {
+	if s.Valid {
+		return StringFrom(strings.TrimSpace(s.String))
+	}
+
+	return s
 }
